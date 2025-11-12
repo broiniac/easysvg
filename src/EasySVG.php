@@ -310,15 +310,15 @@ class EasySVG
                 $horizAdvX -= $this->font->hkern[$prevLetter][$letter] * $fontSize;
             }
 
-            //ignore this glyph instead of throwing an error if the font does not define it
-            if (!array_key_exists($letter, $this->font->glyphs)) {
-                continue;
-            }
-
             // line break support (10 is unicode for linebreak)
             if ($letter === 10) {
                 $horizAdvX = 0;
                 $horizAdvY += $this->font->lineHeight * ($this->font->ascent + $this->font->descent);
+                continue;
+            }
+
+            // ignore this glyph instead of throwing an error if the font does not define it
+            if (!array_key_exists($letter, $this->font->glyphs)) {
                 continue;
             }
 
@@ -359,16 +359,16 @@ class EasySVG
         $prevLetter = '';
 
         foreach ($textUnicode as $letter) {
-            //ignore this glyph instead of throwing an error if the font does not define it
-            if (!array_key_exists($letter, $this->font->glyphs)) {
-                continue;
-            }
-
             // line break support (10 is unicode for linebreak)
             if ($letter === 10) {
                 $width = max($lineWidth, $width);
                 $height += $lineHeight * $this->font->lineHeight;
                 $lineWidth = 0;
+                continue;
+            }
+
+            // ignore this glyph instead of throwing an error if the font does not define it
+            if (!array_key_exists($letter, $this->font->glyphs)) {
                 continue;
             }
 
